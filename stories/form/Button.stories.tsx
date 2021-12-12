@@ -8,7 +8,7 @@ export default {
   component: Button,
 } as ComponentMeta<typeof Button>;
 
-export const Btn: ComponentStory<typeof Button> = () => {
+export const Default: ComponentStory<typeof Button> = () => {
   const handlePress = () => console.log('button pressed');
   return <Button value="Press me" onPress={handlePress} />;
 };
