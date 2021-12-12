@@ -1,5 +1,11 @@
 {
     "translation": {
-        "app_name": "App name"
+        "app_name": "App name",
+        "pages": {
+            "home": "Accueil",
+            "login": "Se connecter",
+            "register": "S'inscrire",
+            "Dashboard": "Dashboard"
+        }
     }
 }
