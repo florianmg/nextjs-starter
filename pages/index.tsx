@@ -1,9 +1,11 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const Home: NextPage = () => {
+  const { t } = useTranslation();
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +16,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">{t('app_name')}</a>
         </h1>
 
         <p className={styles.description}>
@@ -66,7 +68,7 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
