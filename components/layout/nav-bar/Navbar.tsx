@@ -20,7 +20,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.HOME.SLUG}>
-                  <a>{t(CONSTANTS.PAGES.HOME.NAME)}</a>
+                  <a>{t(`pages.${CONSTANTS.PAGES.HOME.NAME}`)}</a>
                 </Link>
               </li>
             </ul>
@@ -29,7 +29,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.DASHBOARD.SLUG}>
-                  <a>{t(CONSTANTS.PAGES.DASHBOARD.NAME)}</a>
+                  <a>{t(`pages.${CONSTANTS.PAGES.DASHBOARD.NAME}`)}</a>
                 </Link>
               </li>
               <li>
@@ -44,7 +44,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.HOME.SLUG}>
-                  <a>{t(CONSTANTS.PAGES.HOME.NAME)}</a>
+                  <a>{t(`pages.${CONSTANTS.PAGES.HOME.NAME}`)}</a>
                 </Link>
               </li>
             </ul>
@@ -53,12 +53,12 @@ const Navbar: React.FC<INavbar> = ({ isLogged }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.LOGIN.SLUG}>
-                  <a>{t(CONSTANTS.PAGES.LOGIN.NAME)}</a>
+                  <a>{t(`pages.${CONSTANTS.PAGES.LOGIN.NAME}`)}</a>
                 </Link>
               </li>
               <li>
                 <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
-                  <a>{t(CONSTANTS.PAGES.REGISTER.NAME)}</a>
+                  <a>{t(`pages.${CONSTANTS.PAGES.REGISTER.NAME}`)}</a>
                 </Link>
               </li>
             </ul>
