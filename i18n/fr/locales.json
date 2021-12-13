@@ -8,11 +8,20 @@
             "Dashboard": "Dashboard"
         },
         "login_page": {
-            "title_login": "Se connecter !",
+            "title": "Se connecter !",
             "label_email": "Email",
             "label_password": "Mot de passe",
             "btn_email_connect": "Se connecter",
-            "btn_gmail_connect": "Se connecter avec google"
+            "btn_gmail_connect": "Se connecter avec google",
+            "no_account": "Vous n'avez pas encore de compte ?"
+        },
+        "register_page": {
+            "title": "S'inscrire !",
+            "label_email": "Email",
+            "label_password": "Mot de passe",
+            "btn_email_register": "S'inscrire",
+            "btn_gmail_register": "S'inscrire avec google",
+            "already_account": "Vous avez déjà un compte ?"
         }
     }
 }
