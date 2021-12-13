@@ -1,0 +1,12 @@
+.input {
+  width: 100%;
+}
+
+button.input {
+  cursor: pointer;
+}
+
+input[type='text'].input,
+input[type='password'].input {
+  // background-color: red;
+}

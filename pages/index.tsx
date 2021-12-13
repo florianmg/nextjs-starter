@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { Modal } from '../components/layout';
-import { Button } from '../components/form';
+import { Button, InputText, Select } from '../components/form';
 import { useTranslation } from 'react-i18next';
 
 const Home: NextPage = () => {
@@ -9,6 +9,25 @@ const Home: NextPage = () => {
   const { t } = useTranslation();
   return (
     <>
+      <InputText value="test" onChange={() => null} />
+      <InputText type="password" value="test" onChange={() => null} />
+      <Select
+        onChange={() => null}
+        options={[
+          {
+            value: '1',
+            content: 'option 1',
+          },
+          {
+            value: '2',
+            content: 'option 2',
+          },
+          {
+            value: '3',
+            content: 'option 3',
+          },
+        ]}
+      />
       <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi

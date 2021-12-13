@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './Inputs.module.scss';
 
 interface ISelect {
   options: { value: string; content: string }[];
@@ -14,6 +15,7 @@ const Select: React.FC<ISelect> = ({ options, onChange }) => {
   };
   return (
     <select
+      className={styles.input}
       value={selected}
       onChangeCapture={(event) =>
         handleUpdateOptions(event?.currentTarget.value)
