@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import Link from 'next/link';
+
 import { useTranslation } from 'react-i18next';
+
 import { Button, InputText } from '../components/form';
 
+import { CONSTANTS } from '../constants';
 const Login = () => {
   const { t } = useTranslation();
   const [formValues, setFormValues] = useState({
@@ -25,7 +29,7 @@ const Login = () => {
   return (
     <main>
       <div>
-        <h1>{t('login_page.title_login')}</h1>
+        <h1>{t('login_page.title')}</h1>
         <form onSubmitCapture={handleFormSubmit}>
           <InputText
             label={t('login_page.label_email')}
@@ -48,7 +52,9 @@ const Login = () => {
             type="submit"
           />
         </form>
-
+        <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
+          <a>{t('login_page.no_account')}</a>
+        </Link>
         <Button
           type="button"
           onClick={handleGoogleLogin}
