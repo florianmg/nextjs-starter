@@ -1,9 +1,3 @@
-import {
-  ChangeEventHandler,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-} from 'react';
-
 interface ICheckbox {
   label?: string;
   isChecked: boolean;

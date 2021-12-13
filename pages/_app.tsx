@@ -8,7 +8,7 @@ import { Navbar } from '../components/layout';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Navbar isLogged={true} />
+      <Navbar isLogged={false} />
       <Component {...pageProps} />
     </>
   );
