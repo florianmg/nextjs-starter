@@ -1,13 +1,26 @@
+import React from 'react';
 import styles from './Inputs.module.scss';
 
 interface IButton {
   value: string;
-  onPress: () => void;
+  onClick?: () => void;
+  onSubmit?: (event: React.SyntheticEvent) => void;
+  type?: 'submit' | 'button';
 }
 
-const Button: React.FC<IButton> = ({ value, onPress }) => {
+const Button: React.FC<IButton> = ({
+  value,
+  onClick,
+  type = 'button',
+  onSubmit,
+}) => {
   return (
-    <button className={styles.input} onClick={onPress}>
+    <button
+      type={type}
+      className={styles.input}
+      onSubmit={onSubmit}
+      onClick={onClick}
+    >
       {value}
     </button>
   );

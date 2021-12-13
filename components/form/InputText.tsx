@@ -1,26 +1,36 @@
+import { cleanLabel } from '../../lib/helpers';
 import styles from './Inputs.module.scss';
 
 interface IInputText {
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | 'email';
+  label?: string;
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
+  required?: boolean;
 }
 
 const InputText: React.FC<IInputText> = ({
   type = 'text',
+  label,
   placeholder = '',
   value,
   onChange,
+  required = false,
 }) => {
   return (
-    <input
-      className={styles.input}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={(event) => onChange(event.currentTarget.value)}
-    />
+    <div>
+      {label && <label htmlFor={cleanLabel(label)}>{label}</label>}
+      <input
+        id={label && cleanLabel(label)}
+        required={required}
+        className={styles.input}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+      />
+    </div>
   );
 };
 
