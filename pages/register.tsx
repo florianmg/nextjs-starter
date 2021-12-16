@@ -4,10 +4,13 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import { Button, InputText } from '../components/form';
 import { CONSTANTS } from '../constants';
+import { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const { t } = useTranslation();
-  const { emailRegister, googleAuthenticate } = useAuth({ secure: false });
+  const { emailRegister, googleAuthenticate, currentError } = useAuth({
+    secure: false,
+  });
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -22,7 +25,8 @@ const Register = () => {
     <main>
       <div>
         <h1>{t('register_page.title')}</h1>
-        <form onSubmitCapture={handleFormSubmit}>
+        <h1>{currentError}</h1>
+        <form onSubmit={handleFormSubmit}>
           <InputText
             label={t('register_page.label_email')}
             type="email"
@@ -34,6 +38,8 @@ const Register = () => {
             label={t('register_page.label_password')}
             value={formValues.password}
             type="password"
+            minLength={6}
+            required
             onChange={(value) =>
               setFormValues({ ...formValues, password: value })
             }

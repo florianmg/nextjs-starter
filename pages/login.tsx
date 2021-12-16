@@ -23,7 +23,7 @@ const Login = () => {
     <main>
       <div>
         <h1>{t('login_page.title')}</h1>
-        <form onSubmitCapture={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <InputText
             label={t('login_page.label_email')}
             type="email"
@@ -35,6 +35,8 @@ const Login = () => {
             label={t('login_page.label_password')}
             value={formValues.password}
             type="password"
+            required
+            minLength={6}
             onChange={(value) =>
               setFormValues({ ...formValues, password: value })
             }
