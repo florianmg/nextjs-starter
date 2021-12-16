@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../contexts/UserContext';
 import { auth } from '../lib/firebase';
@@ -13,12 +13,15 @@ import {
   signOut,
 } from 'firebase/auth';
 import { CONSTANTS } from '../constants';
+import { useTranslation } from 'react-i18next';
 
 const useAuth = ({
   secure = true,
   onCheckAuthStateSuccess,
 }: IUseAuthProps): IUseAuth => {
+  const [currentError, setCurrentError] = useState<string>('');
   const { user, setUser } = useContext(UserContext);
+  const { t } = useTranslation();
   const router = useRouter();
 
   const checkAuthState = () => {
@@ -45,50 +48,48 @@ const useAuth = ({
   };
 
   const handleError = (error: any) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const email = error.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    console.log('error >', {
-      errorCode,
-      errorMessage,
-      email,
-      credential,
-    });
+    const message = t([`firebase_errors.${error.code}`, 'firebase_errors.generic']);
+    setCurrentError(message);
   };
-
-
 
   const googleAuthenticate = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-      .then((result) => setUser(constructUser(result.user)))
-      .finally(() => router.push(CONSTANTS.PAGES.DASHBOARD.SLUG))
+    .then((result) => {
+      setUser(constructUser(result.user))
+      router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+    })
       .catch((error) => handleError(error));
   };
 
   const emailRegister = ({ email, password }: IEmailLogInfos) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => setUser(constructUser(result.user)))
-      .finally(() => router.push(CONSTANTS.PAGES.DASHBOARD.SLUG))
+    .then((result) => {
+      setUser(constructUser(result.user))
+      router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+    })
       .catch((error) => handleError(error));
   };
 
   const emailLogin = ({ email, password }: IEmailLogInfos) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((result) => setUser(constructUser(result.user)))
-      .finally(() => router.push(CONSTANTS.PAGES.DASHBOARD.SLUG))
+      .then((result) => {
+        setUser(constructUser(result.user))
+        router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+      })
       .catch((error) => handleError(error));
   };
 
   const logout = () => {
     signOut(auth)
-      .then(() => setUser(undefined))
-      .finally(() => router.push(CONSTANTS.PAGES.HOME.SLUG))
+      .then(() => {
+        setUser(undefined)
+        router.push(CONSTANTS.PAGES.HOME.SLUG)
+      })
       .catch((error) => handleError(error));
   };
 
-  return { user, googleAuthenticate, emailRegister, emailLogin, logout };
+  return { user, googleAuthenticate, emailRegister, emailLogin, logout, currentError };
 };
 
 export default useAuth;

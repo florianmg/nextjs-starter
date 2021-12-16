@@ -11,6 +11,7 @@ export interface IUseAuth {
   emailRegister: ({ email, password }: IEmailLogInfos) => void;
   emailLogin: ({ email, password }: IEmailLogInfos) => void;
   logout: () => void;
+  currentError: string;
 }
 
 export interface IEmailLogInfos {

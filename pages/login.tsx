@@ -7,7 +7,9 @@ import { CONSTANTS } from '../constants';
 
 const Login = () => {
   const { t } = useTranslation();
-  const { googleAuthenticate, emailLogin } = useAuth({ secure: false });
+  const { googleAuthenticate, emailLogin, currentError } = useAuth({
+    secure: false,
+  });
 
   const [formValues, setFormValues] = useState({
     email: '',
@@ -23,6 +25,7 @@ const Login = () => {
     <main>
       <div>
         <h1>{t('login_page.title')}</h1>
+        <h1>{currentError}</h1>
         <form onSubmit={handleFormSubmit}>
           <InputText
             label={t('login_page.label_email')}
