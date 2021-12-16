@@ -48,6 +48,7 @@ const useAuth = ({
   };
 
   const handleError = (error: any) => {
+    console.log('error code > ', error.code);
     const message = t([`firebase_errors.${error.code}`, 'firebase_errors.generic']);
     setCurrentError(message);
   };
