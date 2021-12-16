@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
-
+import useAuth from '../hooks/useAuth';
 import { Button, InputText } from '../components/form';
-
 import { CONSTANTS } from '../constants';
 
 const Register = () => {
   const { t } = useTranslation();
+  const { emailRegister, googleAuthenticate } = useAuth({ secure: false });
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -16,15 +15,7 @@ const Register = () => {
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
-    handleEmailRegister();
-  };
-
-  const handleEmailRegister = (): void => {
-    console.log('> handleEmailRegister ', formValues);
-  };
-
-  const handleGoogleRegister = () => {
-    console.log('Google regster !');
+    emailRegister(formValues);
   };
 
   return (
@@ -59,7 +50,7 @@ const Register = () => {
         </Link>
         <Button
           type="button"
-          onClick={handleGoogleRegister}
+          onClick={googleAuthenticate}
           value={t('register_page.btn_gmail_register')}
         />
       </div>

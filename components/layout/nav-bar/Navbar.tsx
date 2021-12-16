@@ -8,9 +8,10 @@ import styles from './Navbar.module.scss';
 
 interface INavbar {
   isLogged: boolean;
+  onLogout: () => void;
 }
 
-const Navbar: React.FC<INavbar> = ({ isLogged }) => {
+const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
   const { t } = useTranslation();
   return (
     <nav className={styles.navbar}>
@@ -33,7 +34,9 @@ const Navbar: React.FC<INavbar> = ({ isLogged }) => {
                 </Link>
               </li>
               <li>
-                <a href="#">Logout</a>
+                <a href="#" onClick={onLogout}>
+                  Logout
+                </a>
               </li>
             </ul>
           </li>

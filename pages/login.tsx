@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
-
 import { Button, InputText } from '../components/form';
-
+import useAuth from '../hooks/useAuth';
 import { CONSTANTS } from '../constants';
+
 const Login = () => {
   const { t } = useTranslation();
+  const { googleAuthenticate, emailLogin } = useAuth({ secure: false });
+
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -15,15 +16,7 @@ const Login = () => {
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
-    handleEmailLogin();
-  };
-
-  const handleEmailLogin = (): void => {
-    console.log('> handleEmailLogin ', formValues);
-  };
-
-  const handleGoogleLogin = () => {
-    console.log('Google login !');
+    emailLogin(formValues);
   };
 
   return (
@@ -57,7 +50,7 @@ const Login = () => {
         </Link>
         <Button
           type="button"
-          onClick={handleGoogleLogin}
+          onClick={googleAuthenticate}
           value={t('login_page.btn_gmail_connect')}
         />
       </div>
