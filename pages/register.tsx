@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
-
 import { useTranslation } from 'react-i18next';
-
+import useAuth from '../hooks/useAuth';
 import { Button, InputText } from '../components/form';
-
 import { CONSTANTS } from '../constants';
+import { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const { t } = useTranslation();
+  const { emailRegister, googleAuthenticate, currentError } = useAuth({
+    secure: false,
+  });
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -16,22 +18,15 @@ const Register = () => {
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
-    handleEmailRegister();
-  };
-
-  const handleEmailRegister = (): void => {
-    console.log('> handleEmailRegister ', formValues);
-  };
-
-  const handleGoogleRegister = () => {
-    console.log('Google regster !');
+    emailRegister(formValues);
   };
 
   return (
     <main>
       <div>
         <h1>{t('register_page.title')}</h1>
-        <form onSubmitCapture={handleFormSubmit}>
+        <h1>{currentError}</h1>
+        <form onSubmit={handleFormSubmit}>
           <InputText
             label={t('register_page.label_email')}
             type="email"
@@ -43,6 +38,8 @@ const Register = () => {
             label={t('register_page.label_password')}
             value={formValues.password}
             type="password"
+            minLength={6}
+            required
             onChange={(value) =>
               setFormValues({ ...formValues, password: value })
             }
@@ -59,7 +56,7 @@ const Register = () => {
         </Link>
         <Button
           type="button"
-          onClick={handleGoogleRegister}
+          onClick={googleAuthenticate}
           value={t('register_page.btn_gmail_register')}
         />
       </div>

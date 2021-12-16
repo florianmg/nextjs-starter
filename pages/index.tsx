@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
-import { Modal } from '../components/layout';
-import { Button, InputText, Select } from '../components/form';
+import { Navbar } from '../components/layout';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/useAuth';
 
 const Home: NextPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
+  const { user, logout } = useAuth({ secure: true });
   return (
     <>
+      <Navbar isLogged={!!user} onLogout={logout} />
       <div>Welcome to {t('app_name')}</div>
     </>
   );
