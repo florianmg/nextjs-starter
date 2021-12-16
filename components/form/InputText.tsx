@@ -8,6 +8,7 @@ interface IInputText {
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
+  minLength?: number;
 }
 
 const InputText: React.FC<IInputText> = ({
@@ -17,11 +18,13 @@ const InputText: React.FC<IInputText> = ({
   value,
   onChange,
   required = false,
+  minLength = 0,
 }) => {
   return (
     <div>
       {label && <label htmlFor={cleanLabel(label)}>{label}</label>}
       <input
+        minLength={minLength}
         id={label && cleanLabel(label)}
         required={required}
         className={styles.input}
