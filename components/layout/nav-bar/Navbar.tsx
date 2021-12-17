@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { useTranslation } from 'next-i18next';
 
-import { CONSTANTS } from '../../../constants';
+import { ROUTES } from '../../../constants';
 
 import styles from './Navbar.module.scss';
 
@@ -20,7 +20,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
           <li>
             <ul>
               <li>
-                <Link href={CONSTANTS.PAGES.HOME.SLUG}>
+                <Link href={ROUTES.HOME}>
                   <a>{t('menu.home')}</a>
                 </Link>
               </li>
@@ -29,7 +29,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
           <li>
             <ul>
               <li>
-                <Link href={CONSTANTS.PAGES.DASHBOARD.SLUG}>
+                <Link href={ROUTES.DASHBOARD}>
                   <a>{t('menu.dashboard')}</a>
                 </Link>
               </li>
@@ -46,7 +46,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
           <li>
             <ul>
               <li>
-                <Link href={CONSTANTS.PAGES.HOME.SLUG}>
+                <Link href={ROUTES.HOME}>
                   <a>{t('menu.home')}</a>
                 </Link>
               </li>
@@ -55,12 +55,12 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
           <li>
             <ul>
               <li>
-                <Link href={CONSTANTS.PAGES.LOGIN.SLUG}>
+                <Link href={ROUTES.LOGIN}>
                   <a>{t('menu.login')}</a>
                 </Link>
               </li>
               <li>
-                <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
+                <Link href={ROUTES.REGISTER}>
                   <a>{t('menu.register')}</a>
                 </Link>
               </li>

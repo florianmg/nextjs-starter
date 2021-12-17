@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Button, InputText } from '../components/form';
 import useAuth from '../hooks/useAuth';
-import { CONSTANTS } from '../constants';
+import { ROUTES } from '../constants';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ const Login = () => {
             type="submit"
           />
         </form>
-        <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
+        <Link href={ROUTES.REGISTER}>
           <a>{t('login:no_account')}</a>
         </Link>
         <Button
