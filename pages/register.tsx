@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import useAuth from '../hooks/useAuth';
 import { Button, InputText } from '../components/form';
 import { CONSTANTS } from '../constants';
-import { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -24,18 +24,18 @@ const Register = () => {
   return (
     <main>
       <div>
-        <h1>{t('register_page.title')}</h1>
-        <h1>{currentError}</h1>
+        <h1>{t('register:title')}</h1>
+        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('register_page.label_email')}
+            label={t('register:form.email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('register_page.label_password')}
+            label={t('register:form.password')}
             value={formValues.password}
             type="password"
             minLength={6}
@@ -45,14 +45,14 @@ const Register = () => {
             }
           />
           <Button
-            value={t('register_page.btn_email_register')}
+            value={t('register:form.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
 
         <Link href={CONSTANTS.PAGES.LOGIN.SLUG}>
-          <a>{t('register_page.already_account')}</a>
+          <a>{t('register:already_account')}</a>
         </Link>
         <Button
           type="button"
@@ -62,6 +62,14 @@ const Register = () => {
       </div>
     </main>
   );
+};
+
+export const getStaticProps = async ({ locale }: { locale: string }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['register', 'errors'])),
+    },
+  };
 };
 
 export default Register;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Button, InputText } from '../components/form';
 import useAuth from '../hooks/useAuth';
 import { CONSTANTS } from '../constants';
@@ -24,18 +25,18 @@ const Login = () => {
   return (
     <main>
       <div>
-        <h1>{t('login_page.title')}</h1>
-        <h1>{currentError}</h1>
+        <h1>{t('login:title')}</h1>
+        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('login_page.label_email')}
+            label={t('login:form.email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('login_page.label_password')}
+            label={t('login:form.password')}
             value={formValues.password}
             type="password"
             required
@@ -45,13 +46,13 @@ const Login = () => {
             }
           />
           <Button
-            value={t('login_page.btn_email_connect')}
+            value={t('login:form.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
         <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
-          <a>{t('login_page.no_account')}</a>
+          <a>{t('login:no_account')}</a>
         </Link>
         <Button
           type="button"
@@ -61,6 +62,14 @@ const Login = () => {
       </div>
     </main>
   );
+};
+
+export const getStaticProps = async ({ locale }: { locale: string }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['login', 'errors'])),
+    },
+  };
 };
 
 export default Login;

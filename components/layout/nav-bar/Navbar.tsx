@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 import { CONSTANTS } from '../../../constants';
 
@@ -21,7 +21,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.HOME.SLUG}>
-                  <a>{t(`pages.${CONSTANTS.PAGES.HOME.NAME}`)}</a>
+                  <a>{t('menu.home')}</a>
                 </Link>
               </li>
             </ul>
@@ -30,12 +30,12 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.DASHBOARD.SLUG}>
-                  <a>{t(`pages.${CONSTANTS.PAGES.DASHBOARD.NAME}`)}</a>
+                  <a>{t('menu.dashboard')}</a>
                 </Link>
               </li>
               <li>
                 <a href="#" onClick={onLogout}>
-                  Logout
+                  {t('menu.logout')}
                 </a>
               </li>
             </ul>
@@ -47,7 +47,7 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.HOME.SLUG}>
-                  <a>{t(`pages.${CONSTANTS.PAGES.HOME.NAME}`)}</a>
+                  <a>{t('menu.home')}</a>
                 </Link>
               </li>
             </ul>
@@ -56,12 +56,12 @@ const Navbar: React.FC<INavbar> = ({ isLogged, onLogout }) => {
             <ul>
               <li>
                 <Link href={CONSTANTS.PAGES.LOGIN.SLUG}>
-                  <a>{t(`pages.${CONSTANTS.PAGES.LOGIN.NAME}`)}</a>
+                  <a>{t('menu.login')}</a>
                 </Link>
               </li>
               <li>
                 <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
-                  <a>{t(`pages.${CONSTANTS.PAGES.REGISTER.NAME}`)}</a>
+                  <a>{t('menu.register')}</a>
                 </Link>
               </li>
             </ul>

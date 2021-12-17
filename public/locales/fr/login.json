@@ -1,0 +1,9 @@
+{
+    "title": "Se connecter",
+    "form": {
+        "email": "Email",
+        "password": "Mot de passe",
+        "button": "Se connecter"
+    },
+    "no_account": "Vous n'avez pas encore de compte ?"
+}

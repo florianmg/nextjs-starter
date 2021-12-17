@@ -3,9 +3,10 @@ import '../styles/globals.scss';
 import '../styles/variables.scss';
 import '../i18n';
 import { useState } from 'react';
+import type { AppProps } from 'next/app';
+import { appWithTranslation } from 'next-i18next';
 import { UserContext } from '../contexts/UserContext';
 import IUser from '../types/user.types';
-import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<IUser>();
@@ -17,4 +18,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
