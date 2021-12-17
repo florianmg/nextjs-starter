@@ -12,7 +12,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { CONSTANTS } from '../constants';
+import { ROUTES } from '../constants';
 import { useTranslation } from 'react-i18next';
 
 const useAuth = ({
@@ -29,8 +29,8 @@ const useAuth = ({
       if (user) {
         setUser(constructUser(user));
         if (onCheckAuthStateSuccess) onCheckAuthStateSuccess();
-      } else if (router.pathname !== CONSTANTS.PAGES.HOME.SLUG) {
-        router.push(CONSTANTS.PAGES.HOME.SLUG);
+      } else if (router.pathname !== ROUTES.HOME) {
+        router.push(ROUTES.HOME);
       }
     });
   };
@@ -56,7 +56,7 @@ const useAuth = ({
     signInWithPopup(auth, googleProvider)
     .then((result) => {
       setUser(constructUser(result.user))
-      router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+      router.push(ROUTES.DASHBOARD)
     })
       .catch((error) => handleError(error));
   };
@@ -65,7 +65,7 @@ const useAuth = ({
     createUserWithEmailAndPassword(auth, email, password)
     .then((result) => {
       setUser(constructUser(result.user))
-      router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+      router.push(ROUTES.DASHBOARD)
     })
       .catch((error) => handleError(error));
   };
@@ -74,7 +74,7 @@ const useAuth = ({
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         setUser(constructUser(result.user))
-        router.push(CONSTANTS.PAGES.DASHBOARD.SLUG)
+        router.push(ROUTES.DASHBOARD)
       })
       .catch((error) => handleError(error));
   };
@@ -83,7 +83,7 @@ const useAuth = ({
     signOut(auth)
       .then(() => {
         setUser(undefined)
-        router.push(CONSTANTS.PAGES.HOME.SLUG)
+        router.push(ROUTES.DASHBOARD)
       })
       .catch((error) => handleError(error));
   };

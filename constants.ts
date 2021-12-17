@@ -1,16 +1,6 @@
-export const CONSTANTS = {
-  PAGES: {
-    HOME: {
-      SLUG: '/',
-    },
-    LOGIN: {
-      SLUG: '/login',
-    },
-    REGISTER: {
-      SLUG: '/register',
-    },
-    DASHBOARD: {
-      SLUG: '/dashboard',
-    }
-  },
-};
+export const ROUTES = {
+  HOME: "/",
+  LOGIN: "/login",
+  REGISTER: '/register',
+  DASHBOARD: "/dashboard"
+}
