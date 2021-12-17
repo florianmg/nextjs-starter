@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth';
 import { CONSTANTS } from '../constants';
 
 const Login = () => {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation();
   const { googleAuthenticate, emailLogin, currentError } = useAuth({
     secure: false,
   });
@@ -25,18 +25,18 @@ const Login = () => {
   return (
     <main>
       <div>
-        <h1>{t('title')}</h1>
-        <h1>{currentError}</h1>
+        <h1>{t('login:title')}</h1>
+        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('form.email')}
+            label={t('login:form.email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('form.password')}
+            label={t('login:form.password')}
             value={formValues.password}
             type="password"
             required
@@ -46,13 +46,13 @@ const Login = () => {
             }
           />
           <Button
-            value={t('form.button')}
+            value={t('login:form.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
         <Link href={CONSTANTS.PAGES.REGISTER.SLUG}>
-          <a>{t('no_account')}</a>
+          <a>{t('login:no_account')}</a>
         </Link>
         <Button
           type="button"
@@ -67,7 +67,7 @@ const Login = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['login'])),
+      ...(await serverSideTranslations(locale, ['login', 'errors'])),
     },
   };
 };

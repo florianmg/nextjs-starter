@@ -7,7 +7,7 @@ import { Button, InputText } from '../components/form';
 import { CONSTANTS } from '../constants';
 
 const Register = () => {
-  const { t } = useTranslation('register');
+  const { t } = useTranslation();
   const { emailRegister, googleAuthenticate, currentError } = useAuth({
     secure: false,
   });
@@ -24,18 +24,18 @@ const Register = () => {
   return (
     <main>
       <div>
-        <h1>{t('title')}</h1>
-        <h1>{currentError}</h1>
+        <h1>{t('register:title')}</h1>
+        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('form.email')}
+            label={t('register:form.email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('form.password')}
+            label={t('register:form.password')}
             value={formValues.password}
             type="password"
             minLength={6}
@@ -45,14 +45,14 @@ const Register = () => {
             }
           />
           <Button
-            value={t('form.button')}
+            value={t('register:form.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
 
         <Link href={CONSTANTS.PAGES.LOGIN.SLUG}>
-          <a>{t('already_account')}</a>
+          <a>{t('register:already_account')}</a>
         </Link>
         <Button
           type="button"
@@ -67,7 +67,7 @@ const Register = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['register'])),
+      ...(await serverSideTranslations(locale, ['register', 'errors'])),
     },
   };
 };
