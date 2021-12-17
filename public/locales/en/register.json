@@ -1,7 +1,7 @@
 {
     "title": "Register",
     "form": {
-        "email": "Email address",
+        "email": "Email",
         "password": "Password",
         "button": "Register"
     },

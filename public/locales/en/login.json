@@ -1,7 +1,7 @@
 {
     "title": "Connection",
     "form": {
-        "email": "Email address",
+        "email": "Email",
         "password": "Password",
         "button": "Connect"
     },
