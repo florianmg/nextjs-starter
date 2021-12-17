@@ -1,0 +1,9 @@
+{
+    "title": "Register",
+    "form": {
+        "email": "Email address",
+        "password": "Password",
+        "button": "Register"
+    },
+    "already_account": "You already have an account ?"
+}

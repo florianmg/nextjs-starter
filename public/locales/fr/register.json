@@ -1,0 +1,9 @@
+{
+    "title": "Créer un compte",
+    "form": {
+        "email": "Adresse email",
+        "password": "Mot de passe",
+        "button": "Créer un compte"
+    },
+    "already_account": "Vous avez déjà un compte ?"
+}
