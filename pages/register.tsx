@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import useAuth from '../hooks/useAuth';
-import { Button, InputText } from '../components/form';
+import {
+  Button,
+  InputText,
+  GoogleAuthenticateButton,
+} from '../components/form';
 import { ROUTES } from '../constants';
 
 const Register = () => {
@@ -54,10 +58,9 @@ const Register = () => {
         <Link href={ROUTES.LOGIN}>
           <a>{t('register:already_account')}</a>
         </Link>
-        <Button
-          type="button"
+        <GoogleAuthenticateButton
+          value={t('register:form.google_auth')}
           onClick={googleAuthenticate}
-          value={t('register_page.btn_gmail_register')}
         />
       </div>
     </main>
