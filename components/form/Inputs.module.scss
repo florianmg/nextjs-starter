@@ -10,3 +10,23 @@ input[type='text'].input,
 input[type='password'].input {
   // background-color: red;
 }
+
+.google-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  &__icon {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin-right: 25px;
+    background-image: url('../../public/images/google-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
