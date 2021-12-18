@@ -7,6 +7,7 @@ import {
   Button,
   InputText,
   GoogleAuthenticateButton,
+  ErrorMessage,
 } from '../components/form';
 import { ROUTES } from '../constants';
 
@@ -29,7 +30,7 @@ const Register = () => {
     <main>
       <div>
         <h1>{t('auth:register.title')}</h1>
-        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
+        <ErrorMessage errorCode={currentError} />
         <form onSubmit={handleFormSubmit}>
           <InputText
             label={t('auth:email')}

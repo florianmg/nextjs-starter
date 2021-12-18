@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -6,6 +6,7 @@ import {
   Button,
   InputText,
   GoogleAuthenticateButton,
+  ErrorMessage,
 } from '../components/form';
 import { Modal } from '../components/layout';
 import useAuth from '../hooks/useAuth';
@@ -13,7 +14,12 @@ import { ROUTES } from '../constants';
 
 const Login = () => {
   const { t } = useTranslation();
-  const { googleAuthenticate, emailLogin, currentError } = useAuth({
+  const {
+    googleAuthenticate,
+    emailLogin,
+    currentError,
+    sendNewPasswordRequest,
+  } = useAuth({
     secure: false,
   });
 
@@ -21,7 +27,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
     useState(false);
@@ -31,26 +36,37 @@ const Login = () => {
     emailLogin(formValues);
   };
 
+  const handleResetPasswordFormSubmit = (event: React.SyntheticEvent): void => {
+    event.preventDefault();
+    sendNewPasswordRequest(resetPasswordEmail);
+  };
+
   return (
     <main>
       <Modal
         isOpen={isResetPasswordModalOpen}
         closeModal={() => setIsResetPasswordModalOpen(false)}
       >
-        <form>
+        <ErrorMessage errorCode={currentError} />
+        <form onSubmit={handleResetPasswordFormSubmit}>
           <InputText
             value={resetPasswordEmail}
             onChange={setResetPasswordEmail}
             required
             label={t('auth:email')}
           />
+          <Button
+            type="submit"
+            onSubmit={handleResetPasswordFormSubmit}
+            value={t('auth:reset_passord')}
+          />
         </form>
       </Modal>
 
       <div>
         <h1>{t('auth:login.title')}</h1>
-        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
+          <ErrorMessage errorCode={currentError} />
           <InputText
             label={t('auth:email')}
             type="email"
