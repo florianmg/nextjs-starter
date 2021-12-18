@@ -11,6 +11,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { ROUTES } from '../constants';
 import { useTranslation } from 'react-i18next';
@@ -88,7 +89,18 @@ const useAuth = ({
       .catch((error) => handleError(error));
   };
 
-  return { user, googleAuthenticate, emailRegister, emailLogin, logout, currentError };
+  const sendNewPasswordRequest = async (email: string): Promise<boolean> => {
+
+    return sendPasswordResetEmail(auth, email)
+      .then(() => true)
+      .catch((error) => {
+        handleError(error)
+        return false;
+      })
+
+  }
+
+  return { user, googleAuthenticate, emailRegister, emailLogin, logout, currentError, sendNewPasswordRequest };
 };
 
 export default useAuth;

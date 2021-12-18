@@ -1,9 +1,0 @@
-{
-    "title": "Connection",
-    "form": {
-        "email": "Email",
-        "password": "Password",
-        "button": "Connect"
-    },
-    "no_account": "You don't have an account yet ?"
-}

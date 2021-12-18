@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -6,13 +6,20 @@ import {
   Button,
   InputText,
   GoogleAuthenticateButton,
+  ErrorMessage,
 } from '../components/form';
+import { Modal } from '../components/layout';
 import useAuth from '../hooks/useAuth';
 import { ROUTES } from '../constants';
 
 const Login = () => {
   const { t } = useTranslation();
-  const { googleAuthenticate, emailLogin, currentError } = useAuth({
+  const {
+    googleAuthenticate,
+    emailLogin,
+    currentError,
+    sendNewPasswordRequest,
+  } = useAuth({
     secure: false,
   });
 
@@ -20,27 +27,68 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const [resetPasswordEmail, setResetPasswordEmail] = useState('');
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
+  const [resetPasswordEmailSended, setResetPasswordEmailSended] =
+    useState(false);
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     emailLogin(formValues);
   };
 
+  const handleResetPasswordFormSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const success = await sendNewPasswordRequest(resetPasswordEmail);
+    if (success) {
+      setResetPasswordEmailSended(true);
+    }
+  };
+
   return (
     <main>
+      <Modal
+        isOpen={isResetPasswordModalOpen}
+        closeModal={() => setIsResetPasswordModalOpen(false)}
+      >
+        {resetPasswordEmailSended ? (
+          <p>
+            {t('auth:reset_password_success', { email: resetPasswordEmail })}
+          </p>
+        ) : (
+          <>
+            <ErrorMessage errorCode={currentError} />
+            <form onSubmit={handleResetPasswordFormSubmit}>
+              <InputText
+                value={resetPasswordEmail}
+                onChange={setResetPasswordEmail}
+                required
+                label={t('auth:email')}
+              />
+              <Button
+                type="submit"
+                onSubmit={handleResetPasswordFormSubmit}
+                value={t('auth:reset_passord')}
+              />
+            </form>
+          </>
+        )}
+      </Modal>
+
       <div>
-        <h1>{t('login:title')}</h1>
-        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
+        <h1>{t('auth:login.title')}</h1>
         <form onSubmit={handleFormSubmit}>
+          <ErrorMessage errorCode={currentError} />
           <InputText
-            label={t('login:form.email')}
+            label={t('auth:email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('login:form.password')}
+            label={t('auth:password')}
             value={formValues.password}
             type="password"
             required
@@ -50,18 +98,21 @@ const Login = () => {
             }
           />
           <Button
-            value={t('login:form.button')}
+            value={t('auth:login.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
         <Link href={ROUTES.REGISTER}>
-          <a>{t('login:no_account')}</a>
+          <a>{t('auth:login.no_account')}</a>
         </Link>
         <GoogleAuthenticateButton
-          value={t('login:form.google_auth')}
+          value={t('auth:google_auth')}
           onClick={googleAuthenticate}
         />
+        <p onClick={() => setIsResetPasswordModalOpen(true)}>
+          Mot de passe oublié ?
+        </p>
       </div>
     </main>
   );
@@ -70,7 +121,7 @@ const Login = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['login', 'errors'])),
+      ...(await serverSideTranslations(locale, ['auth', 'errors'])),
     },
   };
 };

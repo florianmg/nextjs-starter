@@ -7,6 +7,7 @@ import {
   Button,
   InputText,
   GoogleAuthenticateButton,
+  ErrorMessage,
 } from '../components/form';
 import { ROUTES } from '../constants';
 
@@ -28,18 +29,18 @@ const Register = () => {
   return (
     <main>
       <div>
-        <h1>{t('register:title')}</h1>
-        {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
+        <h1>{t('auth:register.title')}</h1>
+        <ErrorMessage errorCode={currentError} />
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('register:form.email')}
+            label={t('auth:email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('register:form.password')}
+            label={t('auth:password')}
             value={formValues.password}
             type="password"
             minLength={6}
@@ -49,17 +50,17 @@ const Register = () => {
             }
           />
           <Button
-            value={t('register:form.button')}
+            value={t('auth:register.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
 
         <Link href={ROUTES.LOGIN}>
-          <a>{t('register:already_account')}</a>
+          <a>{t('auth:register.already_account')}</a>
         </Link>
         <GoogleAuthenticateButton
-          value={t('register:form.google_auth')}
+          value={t('auth:google_auth')}
           onClick={googleAuthenticate}
         />
       </div>
@@ -70,7 +71,7 @@ const Register = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['register', 'errors'])),
+      ...(await serverSideTranslations(locale, ['auth', 'errors'])),
     },
   };
 };
