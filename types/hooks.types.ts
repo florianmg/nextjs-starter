@@ -12,7 +12,7 @@ export interface IUseAuth {
   emailLogin: ({ email, password }: IEmailLogInfos) => void;
   logout: () => void;
   currentError: string;
-  sendNewPasswordRequest: (email: string) => void;
+  sendNewPasswordRequest: (email: string) => Promise<boolean>;
 }
 
 export interface IEmailLogInfos {

@@ -89,12 +89,15 @@ const useAuth = ({
       .catch((error) => handleError(error));
   };
 
-  const sendNewPasswordRequest = (email: string) => {
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        console.log('passwordEmailResetSend')
+  const sendNewPasswordRequest = async (email: string): Promise<boolean> => {
+
+    return sendPasswordResetEmail(auth, email)
+      .then(() => true)
+      .catch((error) => {
+        handleError(error)
+        return false;
       })
-      .catch((error) => handleError(error))
+
   }
 
   return { user, googleAuthenticate, emailRegister, emailLogin, logout, currentError, sendNewPasswordRequest };

@@ -30,15 +30,20 @@ const Login = () => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
     useState(false);
+  const [resetPasswordEmailSended, setResetPasswordEmailSended] =
+    useState(false);
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     emailLogin(formValues);
   };
 
-  const handleResetPasswordFormSubmit = (event: React.SyntheticEvent): void => {
+  const handleResetPasswordFormSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    sendNewPasswordRequest(resetPasswordEmail);
+    const success = await sendNewPasswordRequest(resetPasswordEmail);
+    if (success) {
+      setResetPasswordEmailSended(true);
+    }
   };
 
   return (
@@ -47,20 +52,28 @@ const Login = () => {
         isOpen={isResetPasswordModalOpen}
         closeModal={() => setIsResetPasswordModalOpen(false)}
       >
-        <ErrorMessage errorCode={currentError} />
-        <form onSubmit={handleResetPasswordFormSubmit}>
-          <InputText
-            value={resetPasswordEmail}
-            onChange={setResetPasswordEmail}
-            required
-            label={t('auth:email')}
-          />
-          <Button
-            type="submit"
-            onSubmit={handleResetPasswordFormSubmit}
-            value={t('auth:reset_passord')}
-          />
-        </form>
+        {resetPasswordEmailSended ? (
+          <p>
+            {t('auth:reset_password_success', { email: resetPasswordEmail })}
+          </p>
+        ) : (
+          <>
+            <ErrorMessage errorCode={currentError} />
+            <form onSubmit={handleResetPasswordFormSubmit}>
+              <InputText
+                value={resetPasswordEmail}
+                onChange={setResetPasswordEmail}
+                required
+                label={t('auth:email')}
+              />
+              <Button
+                type="submit"
+                onSubmit={handleResetPasswordFormSubmit}
+                value={t('auth:reset_passord')}
+              />
+            </form>
+          </>
+        )}
       </Modal>
 
       <div>
