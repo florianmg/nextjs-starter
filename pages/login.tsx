@@ -7,6 +7,7 @@ import {
   InputText,
   GoogleAuthenticateButton,
 } from '../components/form';
+import { Modal } from '../components/layout';
 import useAuth from '../hooks/useAuth';
 import { ROUTES } from '../constants';
 
@@ -21,6 +22,10 @@ const Login = () => {
     password: '',
   });
 
+  const [resetPasswordEmail, setResetPasswordEmail] = useState('');
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
+
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     emailLogin(formValues);
@@ -28,19 +33,33 @@ const Login = () => {
 
   return (
     <main>
+      <Modal
+        isOpen={isResetPasswordModalOpen}
+        closeModal={() => setIsResetPasswordModalOpen(false)}
+      >
+        <form>
+          <InputText
+            value={resetPasswordEmail}
+            onChange={setResetPasswordEmail}
+            required
+            label={t('auth:email')}
+          />
+        </form>
+      </Modal>
+
       <div>
-        <h1>{t('login:title')}</h1>
+        <h1>{t('auth:login.title')}</h1>
         {currentError && <p>{t(`errors:firebase_errors.${currentError}`)}</p>}
         <form onSubmit={handleFormSubmit}>
           <InputText
-            label={t('login:form.email')}
+            label={t('auth:email')}
             type="email"
             value={formValues.email}
             required
             onChange={(value) => setFormValues({ ...formValues, email: value })}
           />
           <InputText
-            label={t('login:form.password')}
+            label={t('auth:password')}
             value={formValues.password}
             type="password"
             required
@@ -50,18 +69,21 @@ const Login = () => {
             }
           />
           <Button
-            value={t('login:form.button')}
+            value={t('auth:login.button')}
             onSubmit={handleFormSubmit}
             type="submit"
           />
         </form>
         <Link href={ROUTES.REGISTER}>
-          <a>{t('login:no_account')}</a>
+          <a>{t('auth:login.no_account')}</a>
         </Link>
         <GoogleAuthenticateButton
-          value={t('login:form.google_auth')}
+          value={t('auth:google_auth')}
           onClick={googleAuthenticate}
         />
+        <p onClick={() => setIsResetPasswordModalOpen(true)}>
+          Mot de passe oublié ?
+        </p>
       </div>
     </main>
   );
@@ -70,7 +92,7 @@ const Login = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['login', 'errors'])),
+      ...(await serverSideTranslations(locale, ['auth', 'errors'])),
     },
   };
 };
