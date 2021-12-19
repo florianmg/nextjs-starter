@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../contexts/UserContext';
-import { auth } from '../lib/firebase';
+import { auth, firestore } from '../lib/firebase';
 import { IUseAuth, IUseAuthProps, IEmailLogInfos, IRequest } from '../types/hooks.types';
 import {
   onAuthStateChanged,
@@ -13,8 +13,9 @@ import {
   signOut,
   sendPasswordResetEmail
 } from 'firebase/auth';
+// import { addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { ROUTES } from '../constants';
-import { useTranslation } from 'react-i18next';
+import useFirestore from './useFirestore';
 
 const useAuth = ({
   secure = true,
@@ -22,7 +23,7 @@ const useAuth = ({
 }: IUseAuthProps): IUseAuth => {
   const [currentError, setCurrentError] = useState<string>('');
   const { user, setUser } = useContext(UserContext);
-  const { t } = useTranslation();
+  const { createUserCollection, createDigitalBookCollection }  = useFirestore();
   const router = useRouter();
 
   const checkAuthState = () => {
@@ -56,6 +57,7 @@ const useAuth = ({
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
     .then((result) => {
+      console.log('result > ', result);
       setUser(constructUser(result.user))
       router.push(ROUTES.DASHBOARD)
     })
@@ -64,7 +66,9 @@ const useAuth = ({
 
   const emailRegister = ({ email, password }: IEmailLogInfos) => {
     createUserWithEmailAndPassword(auth, email, password)
-    .then((result) => {
+    .then(async (result) => {
+      await createDigitalBookCollection(result.user.uid);
+      await createUserCollection(result.user.uid);
       setUser(constructUser(result.user))
       router.push(ROUTES.DASHBOARD)
     })
