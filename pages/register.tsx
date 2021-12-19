@@ -10,6 +10,7 @@ import {
   ErrorMessage,
 } from '../components/form';
 import { ROUTES } from '../constants';
+import Loader from '../components/loader';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -20,9 +21,11 @@ const Register = () => {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
+    setIsLoading(true);
     emailRegister(formValues);
   };
 
@@ -30,6 +33,7 @@ const Register = () => {
     <main>
       <div>
         <h1>{t('auth:register.title')}</h1>
+        {isLoading && !currentError && <Loader />}
         <ErrorMessage errorCode={currentError} />
         <form onSubmit={handleFormSubmit}>
           <InputText
