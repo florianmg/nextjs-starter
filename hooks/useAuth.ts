@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../contexts/UserContext';
 import { auth } from '../lib/firebase';
-import { IUseAuth, IUseAuthProps, IEmailLogInfos } from '../types/hooks.types';
+import { IUseAuth, IUseAuthProps, IEmailLogInfos, IRequest } from '../types/hooks.types';
 import {
   onAuthStateChanged,
   User,
@@ -89,13 +89,19 @@ const useAuth = ({
       .catch((error) => handleError(error));
   };
 
-  const sendNewPasswordRequest = async (email: string): Promise<boolean> => {
+  const sendNewPasswordRequest = async (email: string): Promise<IRequest> => {
 
     return sendPasswordResetEmail(auth, email)
-      .then(() => true)
+      .then(() => {
+        return {
+          success: true
+        }
+      })
       .catch((error) => {
-        handleError(error)
-        return false;
+        handleError(error) 
+        return {
+          success: false
+        };
       })
 
   }

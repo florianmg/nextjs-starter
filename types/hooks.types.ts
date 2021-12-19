@@ -5,6 +5,10 @@ export interface IUseAuthProps {
   onCheckAuthStateSuccess?: () => void;
 }
 
+export interface IRequest {
+  success: boolean;
+}
+
 export interface IUseAuth {
   user: IUser | undefined;
   googleAuthenticate: () => void;
@@ -12,7 +16,7 @@ export interface IUseAuth {
   emailLogin: ({ email, password }: IEmailLogInfos) => void;
   logout: () => void;
   currentError: string;
-  sendNewPasswordRequest: (email: string) => Promise<boolean>;
+  sendNewPasswordRequest: (email: string) => Promise<IRequest>;
 }
 
 export interface IEmailLogInfos {
