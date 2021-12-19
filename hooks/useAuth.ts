@@ -16,6 +16,7 @@ import {
 // import { addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { ROUTES } from '../constants';
 import useFirestore from './useFirestore';
+import { Console } from 'console';
 
 const useAuth = ({
   secure = true,
@@ -56,8 +57,12 @@ const useAuth = ({
   const googleAuthenticate = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-    .then((result) => {
-      console.log('result > ', result);
+    .then( async (result) => {
+      const isNewUser = result.user.metadata.creationTime === result.user.metadata.lastSignInTime;
+      if(isNewUser) {
+        await createDigitalBookCollection(result.user.uid);
+        await createUserCollection(result.user.uid);
+      }
       setUser(constructUser(result.user))
       router.push(ROUTES.DASHBOARD)
     })
