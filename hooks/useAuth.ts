@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UserContext } from '../contexts/UserContext';
-import { auth } from '../lib/firebase';
-import { IUseAuth, IUseAuthProps, IEmailLogInfos } from '../types/hooks.types';
+import { auth, firestore } from '../lib/firebase';
+import { IUseAuth, IUseAuthProps, IEmailLogInfos, IRequest } from '../types/hooks.types';
 import {
   onAuthStateChanged,
   User,
@@ -13,8 +13,10 @@ import {
   signOut,
   sendPasswordResetEmail
 } from 'firebase/auth';
+// import { addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { ROUTES } from '../constants';
-import { useTranslation } from 'react-i18next';
+import useFirestore from './useFirestore';
+import { Console } from 'console';
 
 const useAuth = ({
   secure = true,
@@ -22,7 +24,7 @@ const useAuth = ({
 }: IUseAuthProps): IUseAuth => {
   const [currentError, setCurrentError] = useState<string>('');
   const { user, setUser } = useContext(UserContext);
-  const { t } = useTranslation();
+  const { createUserCollection, createDigitalBookCollection }  = useFirestore();
   const router = useRouter();
 
   const checkAuthState = () => {
@@ -55,7 +57,12 @@ const useAuth = ({
   const googleAuthenticate = () => {
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
-    .then((result) => {
+    .then( async (result) => {
+      const isNewUser = result.user.metadata.creationTime === result.user.metadata.lastSignInTime;
+      if(isNewUser) {
+        await createDigitalBookCollection(result.user.uid);
+        await createUserCollection(result.user.uid);
+      }
       setUser(constructUser(result.user))
       router.push(ROUTES.DASHBOARD)
     })
@@ -64,7 +71,9 @@ const useAuth = ({
 
   const emailRegister = ({ email, password }: IEmailLogInfos) => {
     createUserWithEmailAndPassword(auth, email, password)
-    .then((result) => {
+    .then(async (result) => {
+      await createDigitalBookCollection(result.user.uid);
+      await createUserCollection(result.user.uid);
       setUser(constructUser(result.user))
       router.push(ROUTES.DASHBOARD)
     })
@@ -89,13 +98,19 @@ const useAuth = ({
       .catch((error) => handleError(error));
   };
 
-  const sendNewPasswordRequest = async (email: string): Promise<boolean> => {
+  const sendNewPasswordRequest = async (email: string): Promise<IRequest> => {
 
     return sendPasswordResetEmail(auth, email)
-      .then(() => true)
+      .then(() => {
+        return {
+          success: true
+        }
+      })
       .catch((error) => {
-        handleError(error)
-        return false;
+        handleError(error) 
+        return {
+          success: false
+        };
       })
 
   }

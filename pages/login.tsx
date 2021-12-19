@@ -40,7 +40,7 @@ const Login = () => {
 
   const handleResetPasswordFormSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const success = await sendNewPasswordRequest(resetPasswordEmail);
+    const { success } = await sendNewPasswordRequest(resetPasswordEmail);
     if (success) {
       setResetPasswordEmailSended(true);
     }
