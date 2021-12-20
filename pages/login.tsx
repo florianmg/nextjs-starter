@@ -11,6 +11,7 @@ import {
 import { Modal } from '../components/layout';
 import useAuth from '../hooks/useAuth';
 import { ROUTES } from '../constants';
+import Loader from '../components/loader';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const Login = () => {
     useState(false);
   const [resetPasswordEmailSended, setResetPasswordEmailSended] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
@@ -78,8 +80,10 @@ const Login = () => {
 
       <div>
         <h1>{t('auth:login.title')}</h1>
+        {isLoading && !currentError && <Loader />}
         <form onSubmit={handleFormSubmit}>
           <ErrorMessage errorCode={currentError} />
+
           <InputText
             label={t('auth:email')}
             type="email"
