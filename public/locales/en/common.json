@@ -1,0 +1,10 @@
+{
+    "app_name": "NextJs Starter EN",
+    "menu": {
+        "home": "Home",
+        "login": "Login",
+        "register": "Register",
+        "dashboard": "Dashboard",
+        "logout": "Logout"
+    }
+}

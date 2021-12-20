@@ -1,0 +1,33 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+
+  &__content {
+    position: relative;
+    max-width: 900px;
+    width: 90%;
+    min-height: 300px;
+    height: auto;
+    background-color: white;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    border-radius: var(--border-radius-size);
+
+    &__icon {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  }
+}

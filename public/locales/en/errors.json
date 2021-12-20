@@ -1,0 +1,8 @@
+{
+    "firebase_errors": {
+        "generic": "An error occured, please try again later.",
+        "auth/email-already-in-use": "This email address is already linked to an account.",
+        "auth/wrong-password": "No account found with this password/email combinaision",
+        "auth/user-not-found": "No account found with this email address"
+    }
+}
